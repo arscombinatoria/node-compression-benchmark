@@ -205,6 +205,10 @@ function formatNumber(value, fractionDigits = 3) {
   return Number(value).toFixed(fractionDigits);
 }
 
+function formatInteger(value) {
+  return Number(value).toLocaleString('en-US');
+}
+
 async function generateChart(fileResult) {
   const configuration = {
     type: 'line',
@@ -355,7 +359,7 @@ async function main() {
   for (const result of results) {
     readmeLines.push(`## ${result.displayName}`);
     readmeLines.push('');
-    readmeLines.push(`- Original size: ${result.originalSize} bytes`);
+    readmeLines.push(`- Original size: ${formatInteger(result.originalSize)} bytes`);
     readmeLines.push(`- Chart: ![Compression ratio chart for ${result.displayName}](${result.chartPath})`);
     readmeLines.push('');
     readmeLines.push('| Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |');
