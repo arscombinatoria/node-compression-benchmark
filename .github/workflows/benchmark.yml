@@ -1,0 +1,28 @@
+name: Compression Benchmark
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run compression benchmark
+        run: npm run benchmark
+      - name: Report pending artifact updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --stat README.md charts || true
+          if ! git diff --quiet README.md charts; then
+            echo "::warning::Benchmark artifacts differ from committed versions. Run 'npm run benchmark' locally and commit the updated README.md and charts."
+          fi
