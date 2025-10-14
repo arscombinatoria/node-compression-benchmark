@@ -106,56 +106,12 @@ This benchmark measures compression time, output size, and compression ratios fo
 | zstd | 21 | 1024.161 | 3619517 | 0.7958 |
 | zstd | 22 | 1059.232 | 3619510 | 0.7958 |
 
-## react/index.js
+## react/umd/react.production.min.js
 
-- Original size: 190 bytes
-- Chart: ![Compression ratio chart for react/index.js](charts/react-index-js.svg)
+- Original size: 10,751 bytes
+- Chart: ![Compression ratio chart for react/umd/react.production.min.js](charts/react-umd-react-production-min-js.svg)
 
-| Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
-| gzip | 1 | 0.242 | 143 | 0.7526 |
-| gzip | 2 | 0.039 | 143 | 0.7526 |
-| gzip | 3 | 0.041 | 143 | 0.7526 |
-| gzip | 4 | 0.028 | 143 | 0.7526 |
-| gzip | 5 | 0.021 | 143 | 0.7526 |
-| gzip | 6 | 0.020 | 143 | 0.7526 |
-| gzip | 7 | 0.018 | 143 | 0.7526 |
-| gzip | 8 | 0.023 | 143 | 0.7526 |
-| gzip | 9 | 0.016 | 143 | 0.7526 |
-| brotli | 0 | 0.044 | 194 | 1.0211 |
-| brotli | 1 | 0.022 | 145 | 0.7632 |
-| brotli | 2 | 0.023 | 140 | 0.7368 |
-| brotli | 3 | 0.025 | 121 | 0.6368 |
-| brotli | 4 | 0.051 | 119 | 0.6263 |
-| brotli | 5 | 0.042 | 112 | 0.5895 |
-| brotli | 6 | 0.035 | 112 | 0.5895 |
-| brotli | 7 | 0.036 | 112 | 0.5895 |
-| brotli | 8 | 0.028 | 112 | 0.5895 |
-| brotli | 9 | 0.032 | 112 | 0.5895 |
-| brotli | 10 | 0.755 | 115 | 0.6053 |
-| brotli | 11 | 0.795 | 114 | 0.6000 |
-| zstd | 1 | 0.063 | 134 | 0.7053 |
-| zstd | 2 | 0.020 | 134 | 0.7053 |
-| zstd | 3 | 0.021 | 130 | 0.6842 |
-| zstd | 4 | 0.019 | 130 | 0.6842 |
-| zstd | 5 | 0.021 | 130 | 0.6842 |
-| zstd | 6 | 0.020 | 130 | 0.6842 |
-| zstd | 7 | 0.019 | 130 | 0.6842 |
-| zstd | 8 | 0.017 | 130 | 0.6842 |
-| zstd | 9 | 0.022 | 130 | 0.6842 |
-| zstd | 10 | 0.019 | 130 | 0.6842 |
-| zstd | 11 | 0.025 | 130 | 0.6842 |
-| zstd | 12 | 0.025 | 130 | 0.6842 |
-| zstd | 13 | 0.032 | 128 | 0.6737 |
-| zstd | 14 | 0.034 | 128 | 0.6737 |
-| zstd | 15 | 0.034 | 128 | 0.6737 |
-| zstd | 16 | 0.042 | 128 | 0.6737 |
-| zstd | 17 | 0.040 | 128 | 0.6737 |
-| zstd | 18 | 0.040 | 128 | 0.6737 |
-| zstd | 19 | 0.041 | 128 | 0.6737 |
-| zstd | 20 | 0.038 | 128 | 0.6737 |
-| zstd | 21 | 0.039 | 128 | 0.6737 |
-| zstd | 22 | 0.038 | 128 | 0.6737 |
+Benchmark results will be updated after the next run of `npm run benchmark`.
 
 ## moment/min/moment.min.js
 
