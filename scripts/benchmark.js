@@ -181,12 +181,32 @@ const algorithms = [
   },
 ];
 
+const repetitions = Math.max(
+  1,
+  Number.parseInt(process.env.BENCHMARK_REPETITIONS ?? '5', 10)
+);
+const warmupRuns = Math.max(
+  0,
+  Number.parseInt(process.env.BENCHMARK_WARMUP ?? '1', 10)
+);
+
 const chartJSNodeCanvas = new ChartJSNodeCanvas({
   width: 960,
   height: 480,
   type: 'svg',
   backgroundColour: 'white',
 });
+
+function median(values) {
+  const sorted = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+
+  if (sorted.length % 2 === 0) {
+    return (sorted[middle - 1] + sorted[middle]) / 2;
+  }
+
+  return sorted[middle];
+}
 
 function ensureFile(filePath) {
   if (!fs.existsSync(filePath)) {
@@ -292,12 +312,23 @@ async function main() {
       const measurements = [];
 
       for (const level of algorithm.levels) {
-        const start = performance.now();
-        const compressed = algorithm.compress(originalBuffer, level);
-        const end = performance.now();
+        for (let index = 0; index < warmupRuns; index += 1) {
+          algorithm.compress(originalBuffer, level);
+        }
 
-        const compressedSize = compressed.length;
-        const durationMs = end - start;
+        const durationSamples = [];
+        let compressedSize;
+
+        for (let run = 0; run < repetitions; run += 1) {
+          const start = performance.now();
+          const compressed = algorithm.compress(originalBuffer, level);
+          const end = performance.now();
+
+          durationSamples.push(end - start);
+          compressedSize = compressed.length;
+        }
+
+        const durationMs = median(durationSamples);
         const ratio = compressedSize / originalSize;
 
         measurements.push({

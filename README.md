@@ -2,7 +2,7 @@
 
 Last updated: 2025-10-14T13:30:52.637Z
 
-This benchmark measures compression time, output size, and compression ratios for several popular npm packages across all gzip, Brotli, and Zstandard compression levels.
+This benchmark measures compression time, output size, and compression ratios for several popular npm packages across all gzip, Brotli, and Zstandard compression levels. Each timing now represents the median of multiple compression runs (with an optional warm-up) to reduce the impact of occasional slow executions.
 
 ## jquery/dist/jquery.min.js
 
