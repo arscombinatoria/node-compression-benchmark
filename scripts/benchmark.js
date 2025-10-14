@@ -399,7 +399,7 @@ async function main() {
     for (const algorithm of result.algorithms) {
       for (const measurement of algorithm.measurements) {
         readmeLines.push(
-          `| ${algorithm.name} | ${measurement.level} | ${formatNumber(measurement.time)} | ${measurement.size} | ${formatNumber(measurement.ratio, 4)} |`
+          `| ${algorithm.name} | ${measurement.level} | ${formatNumber(measurement.time)} | ${formatInteger(measurement.size)} | ${formatNumber(measurement.ratio, 4)} |`
         );
       }
     }
