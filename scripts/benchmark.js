@@ -12,52 +12,79 @@ const repoRoot = path.resolve(__dirname, '..');
 const chartsDir = path.join(repoRoot, 'charts');
 const verbose = process.env.BENCHMARK_VERBOSE === '1';
 
+function resolvePackageFile(packageName, ...pathSegments) {
+  const packageJsonPath = require.resolve(path.join(packageName, 'package.json'), {
+    paths: [repoRoot],
+  });
+  const packageRoot = path.dirname(packageJsonPath);
+  return path.join(packageRoot, ...pathSegments);
+}
+
+function createPackageFile({ id, displayName, packageName, pathSegments }) {
+  const absolutePath = resolvePackageFile(packageName, ...pathSegments);
+  return {
+    id,
+    displayName,
+    absolutePath,
+    relativePath: path.relative(repoRoot, absolutePath),
+  };
+}
+
 const files = [
-  {
+  createPackageFile({
     id: 'jquery',
     displayName: 'jquery/dist/jquery.min.js',
-    relativePath: path.join('node_modules', 'jquery', 'dist', 'jquery.min.js'),
-  },
-  {
+    packageName: 'jquery',
+    pathSegments: ['dist', 'jquery.min.js'],
+  }),
+  createPackageFile({
     id: 'noto-sans-jp',
     displayName: '@expo-google-fonts/noto-sans-jp/NotoSansJP_400Regular.ttf',
-    relativePath: path.join('node_modules', '@expo-google-fonts', 'noto-sans-jp', 'NotoSansJP_400Regular.ttf'),
-  },
-  {
+    packageName: '@expo-google-fonts/noto-sans-jp',
+    pathSegments: ['NotoSansJP_400Regular.ttf'],
+  }),
+  createPackageFile({
     id: 'react',
     displayName: 'react/umd/react.production.min.js',
-    relativePath: path.join('node_modules', 'react', 'umd', 'react.production.min.js'),
-  },
-  {
+    packageName: 'react',
+    pathSegments: ['umd', 'react.production.min.js'],
+  }),
+  createPackageFile({
     id: 'moment',
     displayName: 'moment/min/moment.min.js',
-    relativePath: path.join('node_modules', 'moment', 'min', 'moment.min.js'),
-  },
-  {
+    packageName: 'moment',
+    pathSegments: ['min', 'moment.min.js'],
+  }),
+  createPackageFile({
     id: 'vue',
     displayName: 'vue/dist/vue.global.prod.js',
-    relativePath: path.join('node_modules', 'vue', 'dist', 'vue.global.prod.js'),
-  },
-  {
+    packageName: 'vue',
+    pathSegments: ['dist', 'vue.global.prod.js'],
+  }),
+  createPackageFile({
     id: 'lodash',
     displayName: 'lodash/lodash.min.js',
-    relativePath: path.join('node_modules', 'lodash', 'lodash.min.js'),
-  },
-  {
+    packageName: 'lodash',
+    pathSegments: ['lodash.min.js'],
+  }),
+  createPackageFile({
     id: 'normalize-css',
     displayName: 'normalize.css/normalize.css',
-    relativePath: path.join('node_modules', 'normalize.css', 'normalize.css'),
-  },
-  {
+    packageName: 'normalize.css',
+    pathSegments: ['normalize.css'],
+  }),
+  createPackageFile({
     id: 'bootstrap',
     displayName: 'bootstrap/dist/css/bootstrap.min.css',
-    relativePath: path.join('node_modules', 'bootstrap', 'dist', 'css', 'bootstrap.min.css'),
-  },
-  {
+    packageName: 'bootstrap',
+    pathSegments: ['dist', 'css', 'bootstrap.min.css'],
+  }),
+  createPackageFile({
     id: 'tailwind-config',
     displayName: 'tailwindcss/stubs/config.full.js',
-    relativePath: path.join('node_modules', 'tailwindcss', 'stubs', 'config.full.js'),
-  },
+    packageName: 'tailwindcss',
+    pathSegments: ['stubs', 'config.full.js'],
+  }),
 ];
 
 const algorithms = [
@@ -183,7 +210,7 @@ async function main() {
   const results = [];
 
   for (const file of files) {
-    const absolutePath = path.join(repoRoot, file.relativePath);
+    const absolutePath = file.absolutePath;
     ensureFile(absolutePath);
 
     const originalBuffer = fs.readFileSync(absolutePath);
