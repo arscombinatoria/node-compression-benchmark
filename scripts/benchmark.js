@@ -20,14 +20,45 @@ function resolvePackageFile(packageName, ...pathSegments) {
   return path.join(packageRoot, ...pathSegments);
 }
 
-function createPackageFile({ id, displayName, packageName, pathSegments }) {
-  const absolutePath = resolvePackageFile(packageName, ...pathSegments);
-  return {
-    id,
-    displayName,
-    absolutePath,
-    relativePath: path.relative(repoRoot, absolutePath),
-  };
+function createPackageFile({
+  id,
+  displayName,
+  packageName,
+  pathSegments,
+  candidates,
+}) {
+  const candidateList = (candidates ?? [
+    {
+      pathSegments,
+      displayName,
+    },
+  ])
+    .filter(Boolean)
+    .map((candidate) => ({
+      ...candidate,
+      displayName:
+        candidate.displayName ?? `${packageName}/${candidate.pathSegments.join('/')}`,
+    }));
+
+  for (const candidate of candidateList) {
+    const absolutePath = resolvePackageFile(packageName, ...candidate.pathSegments);
+    if (fs.existsSync(absolutePath)) {
+      return {
+        id,
+        displayName: candidate.displayName,
+        absolutePath,
+        relativePath: path.relative(repoRoot, absolutePath),
+      };
+    }
+  }
+
+  const attempted = candidateList.map((candidate) =>
+    path.join(packageName, ...candidate.pathSegments)
+  );
+
+  throw new Error(
+    `Required file not found for ${packageName}. Tried: ${attempted.join(', ')}`
+  );
 }
 
 const files = [
@@ -81,9 +112,25 @@ const files = [
   }),
   createPackageFile({
     id: 'tailwind-config',
-    displayName: 'tailwindcss/stubs/config.full.js',
     packageName: 'tailwindcss',
-    pathSegments: ['stubs', 'config.full.js'],
+    candidates: [
+      {
+        pathSegments: ['stubs', 'config.full.js'],
+        displayName: 'tailwindcss/stubs/config.full.js',
+      },
+      {
+        pathSegments: ['theme.css'],
+        displayName: 'tailwindcss/theme.css',
+      },
+      {
+        pathSegments: ['index.css'],
+        displayName: 'tailwindcss/index.css',
+      },
+      {
+        pathSegments: ['utilities.css'],
+        displayName: 'tailwindcss/utilities.css',
+      },
+    ],
   }),
 ];
 
