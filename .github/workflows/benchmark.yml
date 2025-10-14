@@ -5,11 +5,17 @@ on:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   benchmark:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -18,6 +24,21 @@ jobs:
         run: npm ci
       - name: Run compression benchmark
         run: npm run benchmark
+      - name: Commit benchmark artifacts
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md charts
+          if git diff --cached --quiet; then
+            echo "No benchmark updates to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update benchmark artifacts"
+          git push origin HEAD:"${BRANCH_NAME}"
       - name: Report pending artifact updates
         run: |
           git config user.name "github-actions[bot]"
