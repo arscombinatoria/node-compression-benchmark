@@ -72,7 +72,14 @@ const files = [
     id: 'noto-sans-jp',
     displayName: '@expo-google-fonts/noto-sans-jp/NotoSansJP_400Regular.ttf',
     packageName: '@expo-google-fonts/noto-sans-jp',
-    pathSegments: ['NotoSansJP_400Regular.ttf'],
+    candidates: [
+      {
+        pathSegments: ['400Regular', 'NotoSansJP_400Regular.ttf'],
+      },
+      {
+        pathSegments: ['NotoSansJP_400Regular.ttf'],
+      },
+    ],
   }),
   createPackageFile({
     id: 'react',
