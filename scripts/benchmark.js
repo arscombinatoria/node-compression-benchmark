@@ -83,9 +83,17 @@ const files = [
   }),
   createPackageFile({
     id: 'react',
-    displayName: 'react/umd/react.production.min.js',
     packageName: 'react',
-    pathSegments: ['umd', 'react.production.min.js'],
+    candidates: [
+      {
+        pathSegments: ['cjs', 'react.production.js'],
+        displayName: 'react/cjs/react.production.js',
+      },
+      {
+        pathSegments: ['umd', 'react.production.min.js'],
+        displayName: 'react/umd/react.production.min.js',
+      },
+    ],
   }),
   createPackageFile({
     id: 'moment',
