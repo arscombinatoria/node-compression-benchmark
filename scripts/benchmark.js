@@ -25,8 +25,8 @@ const files = [
   },
   {
     id: 'react',
-    displayName: 'react/index.js',
-    relativePath: path.join('node_modules', 'react', 'index.js'),
+    displayName: 'react/umd/react.production.min.js',
+    relativePath: path.join('node_modules', 'react', 'umd', 'react.production.min.js'),
   },
   {
     id: 'moment',

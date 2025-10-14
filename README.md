@@ -106,10 +106,10 @@ This benchmark measures compression time, output size, and compression ratios fo
 | zstd | 21 | 758.016 | 3619517 | 0.7958 |
 | zstd | 22 | 772.619 | 3619510 | 0.7958 |
 
-## react/index.js
+## react/umd/react.production.min.js
 
-- Original size: 190 bytes
-- Chart: ![Compression ratio chart for react/index.js](charts/react-index-js.svg)
+- Original size: 10751 bytes
+- Chart: ![Compression ratio chart for react/umd/react.production.min.js](charts/react-umd-react-production-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
 | --- | --- | --- | --- | --- |
