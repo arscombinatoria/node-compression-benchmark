@@ -83,7 +83,11 @@ const algorithms = [
     name: 'zstd',
     levels: Array.from({ length: 22 }, (_, index) => index + 1),
     compress(buffer, level) {
-      return zlib.zstdCompressSync(buffer, { level });
+      return zlib.zstdCompressSync(buffer, {
+        params: {
+          [zlib.constants.ZSTD_c_compressionLevel]: level,
+        },
+      });
     },
   },
 ];
