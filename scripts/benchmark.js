@@ -126,6 +126,12 @@ const files = [
     pathSegments: ['dist', 'css', 'bootstrap.min.css'],
   }),
   createPackageFile({
+    id: 'cities-json',
+    displayName: 'cities.json/cities.json',
+    packageName: 'cities.json',
+    pathSegments: ['cities.json'],
+  }),
+  createPackageFile({
     id: 'tailwind-config',
     packageName: 'tailwindcss',
     candidates: [
