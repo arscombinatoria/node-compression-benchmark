@@ -4,10 +4,10 @@ Last updated: 2026-01-19T13:09:15.452Z
 
 This benchmark measures compression time, output size, and compression ratios for several popular npm packages across all gzip, Brotli, and Zstandard compression levels.
 
-## jquery/dist/jquery.min.js
+## jquery/dist-module/jquery.module.min.js
 
 - Original size: 87,533 bytes
-- Chart: ![Compression ratio chart for jquery/dist/jquery.min.js](charts/jquery-dist-jquery-min-js.svg)
+- Chart: ![Compression ratio chart for jquery/dist-module/jquery.module.min.js](charts/jquery-dist-module-jquery-module-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
 | --- | --- | --- | --- | --- |

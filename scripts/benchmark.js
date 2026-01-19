@@ -64,9 +64,17 @@ function createPackageFile({
 const files = [
   createPackageFile({
     id: 'jquery',
-    displayName: 'jquery/dist/jquery.min.js',
     packageName: 'jquery',
-    pathSegments: ['dist', 'jquery.min.js'],
+    candidates: [
+      {
+        pathSegments: ['dist-module', 'jquery.module.min.js'],
+        displayName: 'jquery/dist-module/jquery.module.min.js',
+      },
+      {
+        pathSegments: ['dist', 'jquery.min.js'],
+        displayName: 'jquery/dist/jquery.min.js',
+      },
+    ],
   }),
   createPackageFile({
     id: 'noto-sans-jp',
