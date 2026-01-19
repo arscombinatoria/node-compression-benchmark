@@ -12,11 +12,27 @@ const repoRoot = path.resolve(__dirname, '..');
 const chartsDir = path.join(repoRoot, 'charts');
 const verbose = process.env.BENCHMARK_VERBOSE === '1';
 
+function findPackageRoot(packageName) {
+  const entryPath = require.resolve(packageName, { paths: [repoRoot] });
+  let currentDir = path.dirname(entryPath);
+  const { root } = path.parse(currentDir);
+
+  while (currentDir !== root) {
+    const packageJsonPath = path.join(currentDir, 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+      if (packageJson.name === packageName) {
+        return currentDir;
+      }
+    }
+    currentDir = path.dirname(currentDir);
+  }
+
+  throw new Error(`Unable to locate package.json for ${packageName}`);
+}
+
 function resolvePackageFile(packageName, ...pathSegments) {
-  const packageJsonPath = require.resolve(path.join(packageName, 'package.json'), {
-    paths: [repoRoot],
-  });
-  const packageRoot = path.dirname(packageJsonPath);
+  const packageRoot = findPackageRoot(packageName);
   return path.join(packageRoot, ...pathSegments);
 }
 
