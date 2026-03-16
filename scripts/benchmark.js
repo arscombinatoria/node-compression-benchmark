@@ -207,6 +207,18 @@ const repetitions = Math.max(
   1,
   Number.parseInt(process.env.BENCHMARK_REPETITIONS ?? '5', 10)
 );
+const targetRelError = Math.max(
+  0,
+  Number.parseFloat(process.env.BENCHMARK_TARGET_REL_ERROR ?? '0.05')
+);
+const minSamples = Math.max(
+  1,
+  Number.parseInt(process.env.BENCHMARK_MIN_SAMPLES ?? String(repetitions), 10)
+);
+const maxSamples = Math.max(
+  minSamples,
+  Number.parseInt(process.env.BENCHMARK_MAX_SAMPLES ?? String(repetitions), 10)
+);
 const warmupRuns = Math.max(
   0,
   Number.parseInt(process.env.BENCHMARK_WARMUP ?? '1', 10)
@@ -228,6 +240,60 @@ function median(values) {
   }
 
   return sorted[middle];
+}
+
+function mean(values) {
+  return values.reduce((sum, value) => sum + value, 0) / values.length;
+}
+
+function sampleStandardDeviation(values, average) {
+  if (values.length <= 1) {
+    return 0;
+  }
+
+  const squaredDiffSum = values.reduce((sum, value) => {
+    const diff = value - average;
+    return sum + diff * diff;
+  }, 0);
+
+  return Math.sqrt(squaredDiffSum / (values.length - 1));
+}
+
+function tCritical975(degreesOfFreedom) {
+  const criticalValues = {
+    1: 12.706,
+    2: 4.303,
+    3: 3.182,
+    4: 2.776,
+    5: 2.571,
+    6: 2.447,
+    7: 2.365,
+    8: 2.306,
+    9: 2.262,
+    10: 2.228,
+    11: 2.201,
+    12: 2.179,
+    13: 2.16,
+    14: 2.145,
+    15: 2.131,
+    16: 2.12,
+    17: 2.11,
+    18: 2.101,
+    19: 2.093,
+    20: 2.086,
+    21: 2.08,
+    22: 2.074,
+    23: 2.069,
+    24: 2.064,
+    25: 2.06,
+    26: 2.056,
+    27: 2.052,
+    28: 2.048,
+    29: 2.045,
+    30: 2.042,
+  };
+
+  return criticalValues[degreesOfFreedom] ?? 1.96;
 }
 
 function ensureFile(filePath) {
@@ -341,13 +407,36 @@ async function main() {
         const durationSamples = [];
         let compressedSize;
 
-        for (let run = 0; run < repetitions; run += 1) {
+        let sampleCount = 0;
+        let converged = false;
+
+        while (sampleCount < maxSamples) {
           const start = performance.now();
           const compressed = algorithm.compress(originalBuffer, level);
           const end = performance.now();
 
           durationSamples.push(end - start);
           compressedSize = compressed.length;
+          sampleCount += 1;
+
+          if (sampleCount < minSamples) {
+            continue;
+          }
+
+          const average = mean(durationSamples);
+          if (average <= 0) {
+            continue;
+          }
+
+          const stdDev = sampleStandardDeviation(durationSamples, average);
+          const standardError = stdDev / Math.sqrt(sampleCount);
+          const halfWidth = tCritical975(sampleCount - 1) * standardError;
+          const relativeHalfWidth = halfWidth / average;
+
+          if (relativeHalfWidth <= targetRelError) {
+            converged = true;
+            break;
+          }
         }
 
         const durationMs = median(durationSamples);
@@ -358,6 +447,8 @@ async function main() {
           time: durationMs,
           size: compressedSize,
           ratio,
+          samples: sampleCount,
+          converged,
         });
       }
 
