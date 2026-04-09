@@ -17,7 +17,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for jquery/dist/jquery.min.js](charts/jquery-dist-jquery-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 1.035 | 31,033 | 0.3941 | 5 | yes |
 | gzip | 2 | 1.063 | 30,134 | 0.3827 | 7 | yes |
 | gzip | 3 | 1.185 | 29,671 | 0.3768 | 5 | yes |
@@ -68,7 +68,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for @expo-google-fonts/noto-sans-jp/400Regular/NotoSansJP_400Regular.ttf](charts/expo-google-fonts-noto-sans-jp-400regular-notosansjp-400regular-ttf.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 93.432 | 3,332,519 | 0.6089 | 5 | yes |
 | gzip | 2 | 97.304 | 3,287,937 | 0.6008 | 5 | yes |
 | gzip | 3 | 103.911 | 3,262,028 | 0.5960 | 5 | yes |
@@ -119,7 +119,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for react/cjs/react.production.js](charts/react-cjs-react-production-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 0.072 | 4,987 | 0.2897 | 25 | no |
 | gzip | 2 | 0.078 | 4,874 | 0.2831 | 25 | no |
 | gzip | 3 | 0.086 | 4,806 | 0.2791 | 25 | no |
@@ -170,7 +170,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for moment/min/moment.min.js](charts/moment-min-moment-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 0.597 | 21,216 | 0.3603 | 5 | yes |
 | gzip | 2 | 0.649 | 20,666 | 0.3509 | 5 | yes |
 | gzip | 3 | 0.733 | 20,354 | 0.3456 | 5 | yes |
@@ -221,7 +221,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for vue/dist/vue.global.prod.js](charts/vue-dist-vue-global-prod-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 2.049 | 66,705 | 0.4076 | 5 | yes |
 | gzip | 2 | 2.222 | 65,090 | 0.3977 | 5 | yes |
 | gzip | 3 | 2.545 | 64,098 | 0.3916 | 5 | yes |
@@ -272,7 +272,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for lodash/lodash.min.js](charts/lodash-lodash-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 0.847 | 28,819 | 0.3935 | 5 | yes |
 | gzip | 2 | 0.920 | 28,191 | 0.3849 | 5 | yes |
 | gzip | 3 | 1.075 | 27,724 | 0.3786 | 5 | yes |
@@ -323,7 +323,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for normalize.css/normalize.css](charts/normalize-css-normalize-css.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 0.033 | 1,915 | 0.3120 | 25 | no |
 | gzip | 2 | 0.034 | 1,866 | 0.3040 | 25 | no |
 | gzip | 3 | 0.034 | 1,845 | 0.3006 | 25 | no |
@@ -374,7 +374,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for bootstrap/dist/css/bootstrap.min.css](charts/bootstrap-dist-css-bootstrap-min-css.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 1.173 | 41,452 | 0.1786 | 5 | yes |
 | gzip | 2 | 1.257 | 38,418 | 0.1655 | 5 | yes |
 | gzip | 3 | 1.483 | 36,152 | 0.1558 | 5 | yes |
@@ -425,7 +425,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for cities.json/cities.json](charts/cities-json-cities-json.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 99.193 | 3,751,261 | 0.1709 | 5 | yes |
 | gzip | 2 | 99.415 | 3,528,967 | 0.1607 | 5 | yes |
 | gzip | 3 | 121.220 | 3,370,979 | 0.1536 | 5 | yes |
@@ -476,7 +476,7 @@ Benchmark settings:
 - Chart: ![Compression ratio chart for tailwindcss/theme.css](charts/tailwindcss-theme-css.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |
-| --- | --- | --- | --- | --- | --- | --- |
+| :-- | --: | --: | --: | --: | --: | :-- |
 | gzip | 1 | 0.074 | 5,506 | 0.2826 | 25 | no |
 | gzip | 2 | 0.084 | 5,424 | 0.2784 | 25 | no |
 | gzip | 3 | 0.096 | 5,356 | 0.2749 | 25 | no |
