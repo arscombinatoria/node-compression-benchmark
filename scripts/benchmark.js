@@ -203,21 +203,17 @@ const algorithms = [
   },
 ];
 
-const repetitions = Math.max(
-  1,
-  Number.parseInt(process.env.BENCHMARK_REPETITIONS ?? '5', 10)
-);
 const targetRelError = Math.max(
   0,
   Number.parseFloat(process.env.BENCHMARK_TARGET_REL_ERROR ?? '0.05')
 );
 const minSamples = Math.max(
   1,
-  Number.parseInt(process.env.BENCHMARK_MIN_SAMPLES ?? String(repetitions), 10)
+  Number.parseInt(process.env.BENCHMARK_MIN_SAMPLES ?? '5', 10)
 );
 const maxSamples = Math.max(
   minSamples,
-  Number.parseInt(process.env.BENCHMARK_MAX_SAMPLES ?? String(repetitions), 10)
+  Number.parseInt(process.env.BENCHMARK_MAX_SAMPLES ?? '25', 10)
 );
 const warmupRuns = Math.max(
   0,
@@ -515,6 +511,13 @@ async function main() {
   readmeLines.push('');
   readmeLines.push('This benchmark measures compression time, output size, and compression ratios for several popular npm packages across all gzip, Brotli, and Zstandard compression levels.');
   readmeLines.push('');
+  readmeLines.push('Benchmark settings:');
+  readmeLines.push('');
+  readmeLines.push(`- Warmup runs per level: ${formatInteger(warmupRuns)}`);
+  readmeLines.push(`- Minimum samples per level: ${formatInteger(minSamples)}`);
+  readmeLines.push(`- Maximum samples per level: ${formatInteger(maxSamples)}`);
+  readmeLines.push(`- Target relative half-width (95% CI): ${formatNumber(targetRelError, 4)}`);
+  readmeLines.push('');
 
   for (const result of results) {
     readmeLines.push(`## ${result.displayName}`);
@@ -522,13 +525,13 @@ async function main() {
     readmeLines.push(`- Original size: ${formatInteger(result.originalSize)} bytes`);
     readmeLines.push(`- Chart: ![Compression ratio chart for ${result.displayName}](${result.chartPath})`);
     readmeLines.push('');
-    readmeLines.push('| Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |');
-    readmeLines.push('| --- | --- | --- | --- | --- |');
+    readmeLines.push('| Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |');
+    readmeLines.push('| --- | --- | --- | --- | --- | --- | --- |');
 
     for (const algorithm of result.algorithms) {
       for (const measurement of algorithm.measurements) {
         readmeLines.push(
-          `| ${algorithm.name} | ${measurement.level} | ${formatNumber(measurement.time)} | ${formatInteger(measurement.size)} | ${formatNumber(measurement.ratio, 4)} |`
+          `| ${algorithm.name} | ${measurement.level} | ${formatNumber(measurement.time)} | ${formatInteger(measurement.size)} | ${formatNumber(measurement.ratio, 4)} | ${formatInteger(measurement.samples)} | ${measurement.converged ? 'yes' : 'no'} |`
         );
       }
     }
