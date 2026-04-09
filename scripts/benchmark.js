@@ -203,25 +203,21 @@ const algorithms = [
   },
 ];
 
-const repetitions = Math.max(
-  1,
-  Number.parseInt(process.env.BENCHMARK_REPETITIONS ?? '25', 10)
-);
 const targetRelError = Math.max(
   0,
-  Number.parseFloat(process.env.BENCHMARK_TARGET_REL_ERROR ?? '0.02')
+  Number.parseFloat(process.env.BENCHMARK_TARGET_REL_ERROR ?? '0.05')
 );
 const minSamples = Math.max(
   1,
-  Number.parseInt(process.env.BENCHMARK_MIN_SAMPLES ?? String(repetitions), 10)
+  Number.parseInt(process.env.BENCHMARK_MIN_SAMPLES ?? '5', 10)
 );
 const maxSamples = Math.max(
   minSamples,
-  Number.parseInt(process.env.BENCHMARK_MAX_SAMPLES ?? String(repetitions), 10)
+  Number.parseInt(process.env.BENCHMARK_MAX_SAMPLES ?? '25', 10)
 );
 const warmupRuns = Math.max(
   0,
-  Number.parseInt(process.env.BENCHMARK_WARMUP ?? '5', 10)
+  Number.parseInt(process.env.BENCHMARK_WARMUP ?? '1', 10)
 );
 
 const chartJSNodeCanvas = new ChartJSNodeCanvas({
