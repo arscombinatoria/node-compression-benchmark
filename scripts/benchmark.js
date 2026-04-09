@@ -378,6 +378,16 @@ async function main() {
   }
 
   const results = [];
+  const totalVariants = files.reduce(
+    (fileTotal, _file) =>
+      fileTotal +
+      algorithms.reduce(
+        (algorithmTotal, algorithm) => algorithmTotal + algorithm.levels.length,
+        0
+      ),
+    0
+  );
+  let completedVariants = 0;
 
   for (const file of files) {
     const absolutePath = file.absolutePath;
@@ -446,6 +456,12 @@ async function main() {
           samples: sampleCount,
           converged,
         });
+
+        completedVariants += 1;
+        const overallProgress = (completedVariants / totalVariants) * 100;
+        console.log(
+          `[${formatNumber(overallProgress, 1)}%] ${file.displayName} ${algorithm.name} level ${level} complete`
+        );
       }
 
       algorithmResults.push({
