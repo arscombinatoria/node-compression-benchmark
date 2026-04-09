@@ -10,7 +10,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for jquery/dist/jquery.min.js](charts/jquery-dist-jquery-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 1.041 | 31,033 | 0.3941 |
 | gzip | 2 | 1.173 | 30,134 | 0.3827 |
 | gzip | 3 | 1.178 | 29,671 | 0.3768 |
@@ -61,7 +61,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for @expo-google-fonts/noto-sans-jp/400Regular/NotoSansJP_400Regular.ttf](charts/expo-google-fonts-noto-sans-jp-400regular-notosansjp-400regular-ttf.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 93.747 | 3,332,519 | 0.6089 |
 | gzip | 2 | 96.685 | 3,287,937 | 0.6008 |
 | gzip | 3 | 102.902 | 3,262,028 | 0.5960 |
@@ -112,7 +112,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for react/cjs/react.production.js](charts/react-cjs-react-production-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 0.106 | 4,987 | 0.2897 |
 | gzip | 2 | 0.092 | 4,874 | 0.2831 |
 | gzip | 3 | 0.098 | 4,806 | 0.2791 |
@@ -163,7 +163,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for moment/min/moment.min.js](charts/moment-min-moment-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 0.607 | 21,216 | 0.3603 |
 | gzip | 2 | 0.656 | 20,666 | 0.3509 |
 | gzip | 3 | 0.750 | 20,354 | 0.3456 |
@@ -214,7 +214,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for vue/dist/vue.global.prod.js](charts/vue-dist-vue-global-prod-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 2.062 | 66,705 | 0.4076 |
 | gzip | 2 | 2.246 | 65,090 | 0.3977 |
 | gzip | 3 | 2.554 | 64,098 | 0.3916 |
@@ -265,7 +265,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for lodash/lodash.min.js](charts/lodash-lodash-min-js.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 0.854 | 28,819 | 0.3935 |
 | gzip | 2 | 0.928 | 28,191 | 0.3849 |
 | gzip | 3 | 1.082 | 27,724 | 0.3786 |
@@ -316,7 +316,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for normalize.css/normalize.css](charts/normalize-css-normalize-css.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 0.045 | 1,915 | 0.3120 |
 | gzip | 2 | 0.038 | 1,866 | 0.3040 |
 | gzip | 3 | 0.039 | 1,845 | 0.3006 |
@@ -367,7 +367,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for bootstrap/dist/css/bootstrap.min.css](charts/bootstrap-dist-css-bootstrap-min-css.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 1.202 | 41,452 | 0.1786 |
 | gzip | 2 | 1.274 | 38,418 | 0.1655 |
 | gzip | 3 | 1.477 | 36,152 | 0.1558 |
@@ -418,7 +418,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for cities.json/cities.json](charts/cities-json-cities-json.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 99.454 | 3,751,261 | 0.1709 |
 | gzip | 2 | 100.033 | 3,528,967 | 0.1607 |
 | gzip | 3 | 121.992 | 3,370,979 | 0.1536 |
@@ -469,7 +469,7 @@ This benchmark measures compression time, output size, and compression ratios fo
 - Chart: ![Compression ratio chart for tailwindcss/theme.css](charts/tailwindcss-theme-css.svg)
 
 | Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio |
-| --- | --- | --- | --- | --- |
+| :--- | ---: | ---: | ---: | ---: |
 | gzip | 1 | 0.132 | 5,506 | 0.2826 |
 | gzip | 2 | 0.142 | 5,424 | 0.2784 |
 | gzip | 3 | 0.145 | 5,356 | 0.2749 |
