@@ -4,12 +4,27 @@ Last updated: 2026-04-10T12:39:27.281Z
 
 This benchmark measures compression time, output size, and compression ratios for several popular npm packages across all gzip, Brotli, and Zstandard compression levels.
 
+## Table of Contents
+
+- [jquery/dist/jquery.min.js](#jquery)
+- [@expo-google-fonts/noto-sans-jp/400Regular/NotoSansJP_400Regular.ttf](#noto-sans-jp)
+- [react/cjs/react.production.js](#react)
+- [moment/min/moment.min.js](#moment)
+- [vue/dist/vue.global.prod.js](#vue)
+- [lodash/lodash.min.js](#lodash)
+- [normalize.css/normalize.css](#normalize-css)
+- [bootstrap/dist/css/bootstrap.min.css](#bootstrap)
+- [cities.json/cities.json](#cities-json)
+- [tailwindcss/theme.css](#tailwind-config)
+
 Benchmark settings:
 
 - Warmup runs per level: 1
 - Minimum samples per level: 5
 - Maximum samples per level: 25
 - Target relative half-width (95% CI): 0.0500
+
+<a id="jquery"></a>
 
 ## jquery/dist/jquery.min.js
 
@@ -62,6 +77,8 @@ Benchmark settings:
 | zstd | 21 | 20.140 | 26,282 | 0.3337 | 5 | yes |
 | zstd | 22 | 20.119 | 26,282 | 0.3337 | 5 | yes |
 
+<a id="noto-sans-jp"></a>
+
 ## @expo-google-fonts/noto-sans-jp/400Regular/NotoSansJP_400Regular.ttf
 
 - Original size: 5,472,784 bytes
@@ -112,6 +129,8 @@ Benchmark settings:
 | zstd | 20 | 1395.609 | 2,710,797 | 0.4953 | 5 | yes |
 | zstd | 21 | 1403.284 | 2,710,761 | 0.4953 | 5 | yes |
 | zstd | 22 | 1414.937 | 2,710,761 | 0.4953 | 5 | yes |
+
+<a id="react"></a>
 
 ## react/cjs/react.production.js
 
@@ -164,6 +183,8 @@ Benchmark settings:
 | zstd | 21 | 4.548 | 4,264 | 0.2477 | 5 | yes |
 | zstd | 22 | 4.543 | 4,264 | 0.2477 | 5 | yes |
 
+<a id="moment"></a>
+
 ## moment/min/moment.min.js
 
 - Original size: 58,890 bytes
@@ -214,6 +235,8 @@ Benchmark settings:
 | zstd | 20 | 15.207 | 17,845 | 0.3030 | 5 | yes |
 | zstd | 21 | 15.270 | 17,845 | 0.3030 | 5 | yes |
 | zstd | 22 | 15.186 | 17,845 | 0.3030 | 5 | yes |
+
+<a id="vue"></a>
 
 ## vue/dist/vue.global.prod.js
 
@@ -266,6 +289,8 @@ Benchmark settings:
 | zstd | 21 | 43.520 | 55,612 | 0.3398 | 5 | yes |
 | zstd | 22 | 42.823 | 55,612 | 0.3398 | 5 | yes |
 
+<a id="lodash"></a>
+
 ## lodash/lodash.min.js
 
 - Original size: 73,234 bytes
@@ -316,6 +341,8 @@ Benchmark settings:
 | zstd | 20 | 19.409 | 24,463 | 0.3340 | 5 | yes |
 | zstd | 21 | 19.492 | 24,463 | 0.3340 | 5 | yes |
 | zstd | 22 | 19.541 | 24,463 | 0.3340 | 5 | yes |
+
+<a id="normalize-css"></a>
 
 ## normalize.css/normalize.css
 
@@ -368,6 +395,8 @@ Benchmark settings:
 | zstd | 21 | 1.356 | 1,697 | 0.2765 | 5 | yes |
 | zstd | 22 | 1.360 | 1,697 | 0.2765 | 25 | no |
 
+<a id="bootstrap"></a>
+
 ## bootstrap/dist/css/bootstrap.min.css
 
 - Original size: 232,111 bytes
@@ -419,6 +448,8 @@ Benchmark settings:
 | zstd | 21 | 83.955 | 26,014 | 0.1121 | 5 | yes |
 | zstd | 22 | 84.314 | 26,014 | 0.1121 | 5 | yes |
 
+<a id="cities-json"></a>
+
 ## cities.json/cities.json
 
 - Original size: 21,953,388 bytes
@@ -469,6 +500,8 @@ Benchmark settings:
 | zstd | 20 | 9327.086 | 2,382,448 | 0.1085 | 5 | yes |
 | zstd | 21 | 9532.485 | 2,382,300 | 0.1085 | 5 | yes |
 | zstd | 22 | 9822.894 | 2,378,818 | 0.1084 | 5 | yes |
+
+<a id="tailwind-config"></a>
 
 ## tailwindcss/theme.css
 
