@@ -4,6 +4,19 @@ Last updated: 2026-04-10T12:39:27.281Z
 
 This benchmark measures compression time, output size, and compression ratios for several popular npm packages across all gzip, Brotli, and Zstandard compression levels.
 
+## Table of Contents
+
+- [jquery/dist/jquery.min.js](#jquerydistjqueryminjs)
+- [@expo-google-fonts/noto-sans-jp/400Regular/NotoSansJP_400Regular.ttf](#expo-google-fontsnoto-sans-jp400regularnotosansjp_400regularttf)
+- [react/cjs/react.production.js](#reactcjsreactproductionjs)
+- [moment/min/moment.min.js](#momentminmomentminjs)
+- [vue/dist/vue.global.prod.js](#vuedistvueglobalprodjs)
+- [lodash/lodash.min.js](#lodashlodashminjs)
+- [normalize.css/normalize.css](#normalizecssnormalizecss)
+- [bootstrap/dist/css/bootstrap.min.css](#bootstrapdistcssbootstrapmincss)
+- [cities.json/cities.json](#citiesjsoncitiesjson)
+- [tailwindcss/theme.css](#tailwindcssthemecss)
+
 Benchmark settings:
 
 - Warmup runs per level: 1
