@@ -485,6 +485,12 @@ async function main() {
   readmeLines.push('');
   readmeLines.push('This benchmark measures compression time, output size, and compression ratios for several popular npm packages across all gzip, Brotli, and Zstandard compression levels.');
   readmeLines.push('');
+  readmeLines.push('## Table of Contents');
+  readmeLines.push('');
+  for (const result of results) {
+    readmeLines.push(`- [${result.displayName}](#${result.id})`);
+  }
+  readmeLines.push('');
   readmeLines.push('Benchmark settings:');
   readmeLines.push('');
   readmeLines.push(`- Warmup runs per level: ${formatInteger(warmupRuns)}`);
@@ -494,6 +500,8 @@ async function main() {
   readmeLines.push('');
 
   for (const result of results) {
+    readmeLines.push(`<a id="${result.id}"></a>`);
+    readmeLines.push('');
     readmeLines.push(`## ${result.displayName}`);
     readmeLines.push('');
     readmeLines.push(`- Original size: ${formatInteger(result.originalSize)} bytes`);
