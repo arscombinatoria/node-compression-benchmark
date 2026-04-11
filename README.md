@@ -22,7 +22,7 @@ Benchmark settings:
 - Warmup runs per level: 1
 - Minimum samples per level: 5
 - Maximum samples per level: 25
-- Target relative half-width (95% CI): 0.0500
+- Target relative half-width (median-based robust estimate): 0.0500
 
 <a id="jquery"></a>
 

@@ -238,58 +238,40 @@ function median(values) {
   return sorted[middle];
 }
 
-function mean(values) {
-  return values.reduce((sum, value) => sum + value, 0) / values.length;
-}
-
-function sampleStandardDeviation(values, average) {
-  if (values.length <= 1) {
+function quantile(values, p) {
+  if (values.length === 0) {
     return 0;
   }
 
-  const squaredDiffSum = values.reduce((sum, value) => {
-    const diff = value - average;
-    return sum + diff * diff;
-  }, 0);
+  const sorted = [...values].sort((a, b) => a - b);
+  const position = (sorted.length - 1) * p;
+  const lower = Math.floor(position);
+  const upper = Math.ceil(position);
 
-  return Math.sqrt(squaredDiffSum / (values.length - 1));
+  if (lower === upper) {
+    return sorted[lower];
+  }
+
+  const weight = position - lower;
+  return sorted[lower] * (1 - weight) + sorted[upper] * weight;
 }
 
-function tCritical975(degreesOfFreedom) {
-  const criticalValues = {
-    1: 12.706,
-    2: 4.303,
-    3: 3.182,
-    4: 2.776,
-    5: 2.571,
-    6: 2.447,
-    7: 2.365,
-    8: 2.306,
-    9: 2.262,
-    10: 2.228,
-    11: 2.201,
-    12: 2.179,
-    13: 2.16,
-    14: 2.145,
-    15: 2.131,
-    16: 2.12,
-    17: 2.11,
-    18: 2.101,
-    19: 2.093,
-    20: 2.086,
-    21: 2.08,
-    22: 2.074,
-    23: 2.069,
-    24: 2.064,
-    25: 2.06,
-    26: 2.056,
-    27: 2.052,
-    28: 2.048,
-    29: 2.045,
-    30: 2.042,
-  };
+function robustRelativeHalfWidth(values) {
+  if (values.length <= 1) {
+    return Number.POSITIVE_INFINITY;
+  }
 
-  return criticalValues[degreesOfFreedom] ?? 1.96;
+  const medianValue = median(values);
+  if (medianValue <= 0) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  const q1 = quantile(values, 0.25);
+  const q3 = quantile(values, 0.75);
+  const iqr = Math.max(0, q3 - q1);
+  const medianStandardError = (1.57 * iqr) / Math.sqrt(values.length);
+
+  return medianStandardError / medianValue;
 }
 
 function ensureFile(filePath) {
@@ -429,15 +411,7 @@ async function main() {
             continue;
           }
 
-          const average = mean(durationSamples);
-          if (average <= 0) {
-            continue;
-          }
-
-          const stdDev = sampleStandardDeviation(durationSamples, average);
-          const standardError = stdDev / Math.sqrt(sampleCount);
-          const halfWidth = tCritical975(sampleCount - 1) * standardError;
-          const relativeHalfWidth = halfWidth / average;
+          const relativeHalfWidth = robustRelativeHalfWidth(durationSamples);
 
           if (relativeHalfWidth <= targetRelError) {
             converged = true;
@@ -522,7 +496,7 @@ async function main() {
   readmeLines.push(`- Warmup runs per level: ${formatInteger(warmupRuns)}`);
   readmeLines.push(`- Minimum samples per level: ${formatInteger(minSamples)}`);
   readmeLines.push(`- Maximum samples per level: ${formatInteger(maxSamples)}`);
-  readmeLines.push(`- Target relative half-width (95% CI): ${formatNumber(targetRelError, 4)}`);
+  readmeLines.push(`- Target relative half-width (median-based robust estimate): ${formatNumber(targetRelError, 4)}`);
   readmeLines.push('');
 
   for (const result of results) {
