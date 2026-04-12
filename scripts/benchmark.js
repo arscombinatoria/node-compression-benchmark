@@ -518,7 +518,7 @@ async function main() {
     readmeLines.push(`- Chart: ![Compression ratio chart for ${result.displayName}](${result.chartPath})`);
     readmeLines.push('');
     readmeLines.push('| Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |');
-    readmeLines.push('| --- | --- | --- | --- | --- | --- | --- |');
+    readmeLines.push('| --- | ---: | ---: | ---: | ---: | ---: | --- |');
 
     for (const algorithm of result.algorithms) {
       for (const measurement of algorithm.measurements) {
