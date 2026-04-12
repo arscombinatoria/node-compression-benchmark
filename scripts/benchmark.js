@@ -287,6 +287,14 @@ function slugify(value) {
     .replace(/^-+|-+$/g, '');
 }
 
+function createReadmeAnchor(displayName) {
+  return displayName
+    .toLowerCase()
+    .replace(/[@]/g, '')
+    .replace(/[^a-z0-9\u00C0-\u024F\u3040-\u30ff\u3400-\u9fff]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
 function formatNumber(value, fractionDigits = 3) {
   return Number(value).toFixed(fractionDigits);
 }
@@ -488,7 +496,9 @@ async function main() {
   readmeLines.push('## Table of Contents');
   readmeLines.push('');
   for (const result of results) {
-    readmeLines.push(`- [${result.displayName}](#${result.id})`);
+    readmeLines.push(
+      `- [${result.displayName}](#${createReadmeAnchor(result.displayName)})`
+    );
   }
   readmeLines.push('');
   readmeLines.push('Benchmark settings:');
@@ -500,9 +510,9 @@ async function main() {
   readmeLines.push('');
 
   for (const result of results) {
-    readmeLines.push(`<a id="${result.id}"></a>`);
-    readmeLines.push('');
-    readmeLines.push(`## ${result.displayName}`);
+    readmeLines.push(
+      `<h2 id="${createReadmeAnchor(result.displayName)}">${result.displayName}</h2>`
+    );
     readmeLines.push('');
     readmeLines.push(`- Original size: ${formatInteger(result.originalSize)} bytes`);
     readmeLines.push(`- Chart: ![Compression ratio chart for ${result.displayName}](${result.chartPath})`);
