@@ -6,16 +6,16 @@ This benchmark measures compression time, output size, and compression ratios fo
 
 ## Table of Contents
 
-- [jquery/dist/jquery.min.js](#jquery)
-- [@expo-google-fonts/noto-sans-jp/400Regular/NotoSansJP_400Regular.ttf](#noto-sans-jp)
-- [react/cjs/react.production.js](#react)
-- [moment/min/moment.min.js](#moment)
-- [vue/dist/vue.global.prod.js](#vue)
-- [lodash/lodash.min.js](#lodash)
-- [normalize.css/normalize.css](#normalize-css)
-- [bootstrap/dist/css/bootstrap.min.css](#bootstrap)
-- [cities.json/cities.json](#cities-json)
-- [tailwindcss/theme.css](#tailwind-config)
+- [jquery/dist/jquery.min.js](#jquery-dist-jquery-min-js)
+- [@expo-google-fonts/noto-sans-jp/400Regular/NotoSansJP_400Regular.ttf](#expo-google-fonts-noto-sans-jp-400regular-notosansjp-400regular-ttf)
+- [react/cjs/react.production.js](#react-cjs-react-production-js)
+- [moment/min/moment.min.js](#moment-min-moment-min-js)
+- [vue/dist/vue.global.prod.js](#vue-dist-vue-global-prod-js)
+- [lodash/lodash.min.js](#lodash-lodash-min-js)
+- [normalize.css/normalize.css](#normalize-css-normalize-css)
+- [bootstrap/dist/css/bootstrap.min.css](#bootstrap-dist-css-bootstrap-min-css)
+- [cities.json/cities.json](#cities-json-cities-json)
+- [tailwindcss/theme.css](#tailwindcss-theme-css)
 
 Benchmark settings:
 
@@ -24,7 +24,6 @@ Benchmark settings:
 - Maximum samples per level: 25
 - Target relative half-width (median-based robust estimate): 0.0500
 
-<a id="jquery"></a>
 
 ## jquery/dist/jquery.min.js
 

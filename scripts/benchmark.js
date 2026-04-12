@@ -488,7 +488,7 @@ async function main() {
   readmeLines.push('## Table of Contents');
   readmeLines.push('');
   for (const result of results) {
-    readmeLines.push(`- [${result.displayName}](#${result.id})`);
+    readmeLines.push(`- [${result.displayName}](#${slugify(result.displayName)})`);
   }
   readmeLines.push('');
   readmeLines.push('Benchmark settings:');
@@ -500,8 +500,6 @@ async function main() {
   readmeLines.push('');
 
   for (const result of results) {
-    readmeLines.push(`<a id="${result.id}"></a>`);
-    readmeLines.push('');
     readmeLines.push(`## ${result.displayName}`);
     readmeLines.push('');
     readmeLines.push(`- Original size: ${formatInteger(result.originalSize)} bytes`);
