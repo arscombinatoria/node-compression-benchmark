@@ -162,6 +162,12 @@ const files = [
     pathSegments: ['cities.json'],
   }),
   createPackageFile({
+    id: 'sqlite-wasm',
+    displayName: '@sqlite.org/sqlite-wasm/dist/sqlite3.wasm',
+    packageName: '@sqlite.org/sqlite-wasm',
+    pathSegments: ['dist', 'sqlite3.wasm'],
+  }),
+  createPackageFile({
     id: 'tailwind-config',
     packageName: 'tailwindcss',
     candidates: [
