@@ -98,6 +98,20 @@ const files = [
     ],
   }),
   createPackageFile({
+    id: 'codemirror-view',
+    packageName: '@codemirror/view',
+    candidates: [
+      {
+        pathSegments: ['dist', 'index.js'],
+        displayName: '@codemirror/view/dist/index.js',
+      },
+      {
+        pathSegments: ['dist', 'index.cjs'],
+        displayName: '@codemirror/view/dist/index.cjs',
+      },
+    ],
+  }),
+  createPackageFile({
     id: 'react',
     packageName: 'react',
     candidates: [
