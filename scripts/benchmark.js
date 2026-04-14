@@ -130,10 +130,10 @@ const files = [
     pathSegments: ['lodash.min.js'],
   }),
   createPackageFile({
-    id: 'normalize-css',
-    displayName: 'normalize.css/normalize.css',
-    packageName: 'normalize.css',
-    pathSegments: ['normalize.css'],
+    id: 'fontawesome-all',
+    displayName: '@fortawesome/fontawesome-free/css/all.min.css',
+    packageName: '@fortawesome/fontawesome-free',
+    pathSegments: ['css', 'all.min.css'],
   }),
   createPackageFile({
     id: 'bootstrap',
