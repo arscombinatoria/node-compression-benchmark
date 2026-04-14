@@ -126,10 +126,10 @@ const files = [
     ],
   }),
   createPackageFile({
-    id: 'moment',
-    displayName: 'moment/min/moment.min.js',
-    packageName: 'moment',
-    pathSegments: ['min', 'moment.min.js'],
+    id: 'dayjs',
+    displayName: 'dayjs/dayjs.min.js',
+    packageName: 'dayjs',
+    pathSegments: ['dayjs.min.js'],
   }),
   createPackageFile({
     id: 'vue',
