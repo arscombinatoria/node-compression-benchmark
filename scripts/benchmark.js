@@ -98,10 +98,19 @@ const files = [
     ],
   }),
   createPackageFile({
-    id: 'm-plus-1p',
-    displayName: '@fontsource/m-plus-1p/files/m-plus-1p-1-400-normal.woff2',
-    packageName: '@fontsource/m-plus-1p',
-    pathSegments: ['files', 'm-plus-1p-1-400-normal.woff2'],
+    id: 'm-plus-1p-japanese',
+    displayName: '@openfonts/m-plus-1p_japanese/m-plus-1p-japanese-400.woff2',
+    packageName: '@openfonts/m-plus-1p_japanese',
+    candidates: [
+      {
+        pathSegments: ['m-plus-1p-japanese-400.woff2'],
+        displayName: '@openfonts/m-plus-1p_japanese/m-plus-1p-japanese-400.woff2',
+      },
+      {
+        pathSegments: ['files', 'm-plus-1p-japanese-400.woff2'],
+        displayName: '@openfonts/m-plus-1p_japanese/m-plus-1p-japanese-400.woff2',
+      },
+    ],
   }),
   createPackageFile({
     id: 'codemirror-view',
