@@ -65,6 +65,7 @@ node scripts/benchmark.js
 - 依存関係を変更した場合は、`package-lock.json` を必ず同時に更新する。
 - 意図しない大規模差分（改行コード・フォーマットのみの変更など）を含めない。
 - 実装や運用方針と `README.md` の記載が矛盾しないようにする。
+- `README.md` のうちベンチマークスクリプトが生成する箇所は、`README.md` を直接編集せず、生成元の `scripts/benchmark.js` を修正して反映する。
 
 ---
 
