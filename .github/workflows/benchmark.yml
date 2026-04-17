@@ -3,6 +3,11 @@ name: Compression Benchmark
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - package.json
+      - package-lock.json
+      - scripts/benchmark.js
+      - .github/workflows/benchmark.yml
   workflow_dispatch:
 
 permissions:
