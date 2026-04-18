@@ -6,7 +6,7 @@
     "benchmark": "node scripts/benchmark.js"
   },
   "dependencies": {
-    "@codemirror/view": "^6.38.6",
+    "@codemirror/view": "^6.41.1",
     "@expo-google-fonts/noto-sans-jp": "^0.4.3",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "@openfonts/m-plus-1p_japanese": "^1.44.2",
