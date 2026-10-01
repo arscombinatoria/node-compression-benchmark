@@ -1,4 +1,7 @@
 const fs = require('fs');
+const os = require('os');
+const { createHash } = require('crypto');
+const { median, medianInterval, readSettings } = require('./statistics');
 const path = require('path');
 const zlib = require('zlib');
 const { performance } = require('perf_hooks');
@@ -85,15 +88,15 @@ const files = [
     pathSegments: ['dist', 'jquery.min.js'],
   }),
   createPackageFile({
-    id: 'noto-sans-jp',
-    displayName: '@expo-google-fonts/noto-sans-jp/NotoSansJP_400Regular.ttf',
-    packageName: '@expo-google-fonts/noto-sans-jp',
+    id: 'm-plus-1p',
+    displayName: '@expo-google-fonts/m-plus-1p/MPLUS1p_400Regular.ttf',
+    packageName: '@expo-google-fonts/m-plus-1p',
     candidates: [
       {
-        pathSegments: ['400Regular', 'NotoSansJP_400Regular.ttf'],
+        pathSegments: ['400Regular', 'MPLUS1p_400Regular.ttf'],
       },
       {
-        pathSegments: ['NotoSansJP_400Regular.ttf'],
+        pathSegments: ['MPLUS1p_400Regular.ttf'],
       },
     ],
   }),
@@ -171,10 +174,10 @@ const files = [
     pathSegments: ['dist', 'css', 'bootstrap.min.css'],
   }),
   createPackageFile({
-    id: 'cities-json',
-    displayName: 'cities.json/cities.json',
-    packageName: 'cities.json',
-    pathSegments: ['cities.json'],
+    id: 'world-countries',
+    displayName: 'world-countries/dist/countries-unescaped.json',
+    packageName: 'world-countries',
+    pathSegments: ['dist', 'countries-unescaped.json'],
   }),
   createPackageFile({
     id: 'sqlite-wasm',
@@ -238,22 +241,7 @@ const algorithms = [
   },
 ];
 
-const targetRelError = Math.max(
-  0,
-  Number.parseFloat(process.env.BENCHMARK_TARGET_REL_ERROR ?? '0.05')
-);
-const minSamples = Math.max(
-  1,
-  Number.parseInt(process.env.BENCHMARK_MIN_SAMPLES ?? '5', 10)
-);
-const maxSamples = Math.max(
-  minSamples,
-  Number.parseInt(process.env.BENCHMARK_MAX_SAMPLES ?? '25', 10)
-);
-const warmupRuns = Math.max(
-  0,
-  Number.parseInt(process.env.BENCHMARK_WARMUP ?? '1', 10)
-);
+const { targetRelError, sampleCount, warmupRuns } = readSettings(process.env);
 
 const chartJSNodeCanvas = new ChartJSNodeCanvas({
   width: 960,
@@ -261,53 +249,6 @@ const chartJSNodeCanvas = new ChartJSNodeCanvas({
   type: 'svg',
   backgroundColour: 'white',
 });
-
-function median(values) {
-  const sorted = [...values].sort((a, b) => a - b);
-  const middle = Math.floor(sorted.length / 2);
-
-  if (sorted.length % 2 === 0) {
-    return (sorted[middle - 1] + sorted[middle]) / 2;
-  }
-
-  return sorted[middle];
-}
-
-function quantile(values, p) {
-  if (values.length === 0) {
-    return 0;
-  }
-
-  const sorted = [...values].sort((a, b) => a - b);
-  const position = (sorted.length - 1) * p;
-  const lower = Math.floor(position);
-  const upper = Math.ceil(position);
-
-  if (lower === upper) {
-    return sorted[lower];
-  }
-
-  const weight = position - lower;
-  return sorted[lower] * (1 - weight) + sorted[upper] * weight;
-}
-
-function robustRelativeHalfWidth(values) {
-  if (values.length <= 1) {
-    return Number.POSITIVE_INFINITY;
-  }
-
-  const medianValue = median(values);
-  if (medianValue <= 0) {
-    return Number.POSITIVE_INFINITY;
-  }
-
-  const q1 = quantile(values, 0.25);
-  const q3 = quantile(values, 0.75);
-  const iqr = Math.max(0, q3 - q1);
-  const medianStandardError = (1.57 * iqr) / Math.sqrt(values.length);
-
-  return medianStandardError / medianValue;
-}
 
 function ensureFile(filePath) {
   if (!fs.existsSync(filePath)) {
@@ -398,6 +339,12 @@ async function generateChart(fileResult) {
 }
 
 async function main() {
+  const startedAt = new Date().toISOString();
+  const runStart = performance.now();
+  const hash = (buffer) => createHash('sha256').update(buffer).digest('hex');
+  const lock = JSON.parse(fs.readFileSync(path.join(repoRoot, 'package-lock.json'), 'utf8'));
+  const packageVersions = Object.fromEntries(Object.keys(require('../package.json').dependencies)
+    .map((name) => [name, lock.packages[`node_modules/${name}`].version]));
   if (!fs.existsSync(chartsDir)) {
     fs.mkdirSync(chartsDir, { recursive: true });
   }
@@ -431,47 +378,38 @@ async function main() {
       const measurements = [];
 
       for (const level of algorithm.levels) {
+        const warmupDurationsMs = [];
         for (let index = 0; index < warmupRuns; index += 1) {
+          const start = performance.now();
           algorithm.compress(originalBuffer, level);
+          warmupDurationsMs.push(performance.now() - start);
         }
 
         const durationSamples = [];
-        let compressedSize;
-
-        let sampleCount = 0;
-        let converged = false;
-
-        while (sampleCount < maxSamples) {
+        let compressed;
+        for (let index = 0; index < sampleCount; index += 1) {
           const start = performance.now();
-          const compressed = algorithm.compress(originalBuffer, level);
-          const end = performance.now();
-
-          durationSamples.push(end - start);
-          compressedSize = compressed.length;
-          sampleCount += 1;
-
-          if (sampleCount < minSamples) {
-            continue;
-          }
-
-          const relativeHalfWidth = robustRelativeHalfWidth(durationSamples);
-
-          if (relativeHalfWidth <= targetRelError) {
-            converged = true;
-            break;
-          }
+          compressed = algorithm.compress(originalBuffer, level);
+          durationSamples.push(performance.now() - start);
         }
-
+        // Validate outside the timed region.
+        const decompress = { gzip: zlib.gunzipSync, brotli: zlib.brotliDecompressSync,
+          zstd: zlib.zstdDecompressSync }[algorithm.name];
+        if (!decompress(compressed).equals(originalBuffer)) {
+          throw new Error(`Round-trip failed: ${file.displayName} ${algorithm.name} ${level}`);
+        }
         const durationMs = median(durationSamples);
-        const ratio = compressedSize / originalSize;
-
+        const interval = medianInterval(durationSamples);
+        const relativeHalfWidth = durationMs > 0
+          ? Math.max(durationMs - interval.lower, interval.upper - durationMs) / durationMs
+          : null;
         measurements.push({
-          level,
-          time: durationMs,
-          size: compressedSize,
-          ratio,
-          samples: sampleCount,
-          converged,
+          level, time: durationMs, size: compressed.length,
+          ratio: compressed.length / originalSize, samples: sampleCount,
+          interval, relativeHalfWidth,
+          precisionMet: relativeHalfWidth !== null && relativeHalfWidth <= targetRelError,
+          durationSamplesMs: durationSamples, warmupDurationsMs,
+          order: completedVariants + 1,
         });
 
         completedVariants += 1;
@@ -497,6 +435,7 @@ async function main() {
       id: file.id,
       displayName: file.displayName,
       originalSize,
+      sha256: hash(originalBuffer),
       algorithms: algorithmResults,
     };
 
@@ -521,6 +460,24 @@ async function main() {
     results.push({ ...fileResult, chartPath: path.relative(repoRoot, chartPath) });
   }
 
+  const metadata = {
+    schemaVersion: 1, startedAt, finishedAt: new Date().toISOString(),
+    elapsedMs: performance.now() - runStart,
+    settings: { sampleCount, warmupRuns, targetRelError, confidence: 0.95,
+      method: 'fixed-sample median with binomial order-statistic interval' },
+    environment: { node: process.version, versions: process.versions,
+      platform: process.platform, arch: process.arch, kernel: os.release(),
+      cpu: os.cpus()[0]?.model, logicalCpus: os.cpus().length,
+      availableParallelism: os.availableParallelism() },
+    packageVersions,
+    sourceHashes: Object.fromEntries(['scripts/benchmark.js', 'scripts/statistics.js', 'package-lock.json']
+      .map((file) => [file, hash(fs.readFileSync(path.join(repoRoot, file)))])),
+    results,
+  };
+  fs.mkdirSync(path.join(repoRoot, 'results'), { recursive: true });
+  fs.writeFileSync(path.join(repoRoot, 'results/latest.json'), JSON.stringify(metadata, null, 2) + '\n');
+  console.log(`Benchmark completed in ${(metadata.elapsedMs / 1000).toFixed(1)} seconds`);
+
   const readmeLines = [];
   readmeLines.push('# Node Compression Benchmark');
   readmeLines.push('');
@@ -539,9 +496,11 @@ async function main() {
   readmeLines.push('Benchmark settings:');
   readmeLines.push('');
   readmeLines.push(`- Warmup runs per level: ${formatInteger(warmupRuns)}`);
-  readmeLines.push(`- Minimum samples per level: ${formatInteger(minSamples)}`);
-  readmeLines.push(`- Maximum samples per level: ${formatInteger(maxSamples)}`);
-  readmeLines.push(`- Target relative half-width (median-based robust estimate): ${formatNumber(targetRelError, 4)}`);
+  readmeLines.push(`- Fixed samples per level: ${formatInteger(sampleCount)}`);
+  readmeLines.push(`- Target relative interval radius: ${formatNumber(targetRelError, 4)}`);
+  readmeLines.push(`- Elapsed benchmark time: ${formatNumber(metadata.elapsedMs / 1000, 1)} seconds`);
+  readmeLines.push('- [Raw observations and environment](results/latest.json) · [Measurement methodology](BENCHMARK.md)');
+  readmeLines.push('- Intervals have at least 95% coverage for independent, identically distributed samples. Precision met means both bounds are within the target distance of the observed median; it is not an accuracy guarantee.');
   readmeLines.push('');
 
   for (const result of results) {
@@ -552,13 +511,13 @@ async function main() {
     readmeLines.push(`- Original size: ${formatInteger(result.originalSize)} bytes`);
     readmeLines.push(`- Chart: ![Compression ratio chart for ${result.displayName}](${result.chartPath})`);
     readmeLines.push('');
-    readmeLines.push('| Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Converged |');
-    readmeLines.push('| --- | ---: | ---: | ---: | ---: | ---: | --- |');
+    readmeLines.push('| Algorithm | Level | Time (ms) | Size (bytes) | Compression Ratio | Samples | Median CI (ms) | Precision met |');
+    readmeLines.push('| --- | ---: | ---: | ---: | ---: | ---: | --- | --- |');
 
     for (const algorithm of result.algorithms) {
       for (const measurement of algorithm.measurements) {
         readmeLines.push(
-          `| ${algorithm.name} | ${measurement.level} | ${formatNumber(measurement.time)} | ${formatInteger(measurement.size)} | ${formatNumber(measurement.ratio, 4)} | ${formatInteger(measurement.samples)} | ${measurement.converged ? 'yes' : 'no'} |`
+          `| ${algorithm.name} | ${measurement.level} | ${formatNumber(measurement.time)} | ${formatInteger(measurement.size)} | ${formatNumber(measurement.ratio, 4)} | ${formatInteger(measurement.samples)} | ${formatNumber(measurement.interval.lower)}–${formatNumber(measurement.interval.upper)} | ${measurement.precisionMet ? 'yes' : 'no'} |`
         );
       }
     }
