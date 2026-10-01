@@ -209,7 +209,7 @@ const files = [
 const algorithms = [
   {
     name: 'gzip',
-    levels: Array.from({ length: 9 }, (_, index) => index + 1),
+    levels: Array.from({ length: 10 }, (_, index) => index),
     compress(buffer, level) {
       return zlib.gzipSync(buffer, { level });
     },
