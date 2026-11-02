@@ -34,7 +34,7 @@
 
 ## 2. 前提条件
 
-- [BENCHMARK.md](BENCHMARK.md) に従い、測定には Node.js 24以降とnpmを使用する（CIはNode.js 24）。
+- [BENCHMARK.md](BENCHMARK.md) に従い、測定には Node.js 26以降とnpmを使用する（CIはNode.js 26）。
 - リポジトリルートでコマンドを実行すること。
 
 測定・依存関係が必要な検証の初回セットアップ:

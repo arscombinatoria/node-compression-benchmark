@@ -1,6 +1,6 @@
 # Measurement methodology
 
-Run `npm ci`, `npm test`, then `npm run benchmark` with Node.js 24 or later.
+Run `npm ci`, `npm test`, then `npm run benchmark` with Node.js 26 or later.
 
 The corpus retains 13 files and all 44 compression levels per file. The Japanese
 TTF is `@expo-google-fonts/m-plus-1p/400Regular/MPLUS1p_400Regular.ttf` (about 1.71 MB).
